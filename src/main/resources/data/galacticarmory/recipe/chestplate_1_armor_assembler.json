@@ -1,0 +1,7 @@
+{
+  "type": "galacticarmory:armor_assembler",
+  "ingredient": "galacticarmory:shoulder_pad",
+  "result": {
+    "id": "galacticarmory:modular_chestplate"
+  }
+}
