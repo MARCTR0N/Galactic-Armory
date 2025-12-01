@@ -65,7 +65,9 @@ neoForge {
         }
 
         data {
-            clientData()
+            // FIX for "Trying to prepare unknown run: clientData" after downgrading.
+            // NeoForge/NeoGradle changed the run type from 'data()' to 'clientData()' in newer versions.
+            data()
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
             // gameDirectory = project.file('run-data')

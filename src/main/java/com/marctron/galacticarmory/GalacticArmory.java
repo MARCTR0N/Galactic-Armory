@@ -76,6 +76,9 @@ public class GalacticArmory
     {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        ModItems.ITEMS.register(modEventBus);
+
+
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         //BLOCKS.register(modEventBus);

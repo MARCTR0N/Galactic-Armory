@@ -36,6 +36,16 @@ public record ArmorAssemblerRecipe(Ingredient inputItem, ItemStack output) imple
     }
 
     @Override
+    public boolean canCraftInDimensions(int i, int i1) {
+        return true;
+    }
+
+    @Override
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
+        return null;
+    }
+
+    @Override
     public RecipeSerializer<? extends Recipe<ArmorAssemblerRecipeInput>> getSerializer() {
         return ModRecipes.ARMOR_ASSEMBLER_SERIALIZER.get();
     }
@@ -45,6 +55,8 @@ public record ArmorAssemblerRecipe(Ingredient inputItem, ItemStack output) imple
         return ModRecipes.ARMOR_ASSEMBLER_TYPE.get();
     }
 
+
+    /*
     @Override
     public PlacementInfo placementInfo() {
         return PlacementInfo.create(inputItem);
@@ -54,6 +66,7 @@ public record ArmorAssemblerRecipe(Ingredient inputItem, ItemStack output) imple
     public RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.CRAFTING_MISC;
     }
+    */
 
     public static class Serializer implements RecipeSerializer<ArmorAssemblerRecipe> {
         public static final MapCodec<ArmorAssemblerRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
