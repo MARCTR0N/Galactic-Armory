@@ -1,16 +1,8 @@
 package com.marctron.galacticarmory;
 
-import org.slf4j.Logger;
-
-import com.marctron.galacticarmory.common.menu.ArmorAssemblerScreen;
 import com.marctron.galacticarmory.common.util.ModDataComponents;
-import com.marctron.galacticarmory.common.util.registry.ModBlockEntities;
-import com.marctron.galacticarmory.common.util.registry.ModBlocks;
-import com.marctron.galacticarmory.common.util.registry.ModItems;
-import com.marctron.galacticarmory.common.util.registry.ModMenus;
-import com.marctron.galacticarmory.common.util.registry.ModRecipes;
+import com.marctron.galacticarmory.common.util.registry.*;
 import com.mojang.logging.LogUtils;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -33,6 +25,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(GalacticArmory.MODID)
@@ -58,16 +51,15 @@ public class GalacticArmory
    
 
     // Creates a creative tab with the id "galacticarmory:example_tab" for the example item, that is placed after the combat tab
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ARMOR_TAB = CREATIVE_MODE_TABS.register("armor_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.galacticarmory")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> ModItems.EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> ModItems.phase1_helmet.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                output.accept(ModItems.EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-                output.accept(ModItems.SHOULDER_PAD.get());
-                output.accept(ModItems.ELBOW_COVER.get());
-                output.accept(ModItems.GLOVE.get());
-                output.accept(ModItems.MODULAR_CHESTPLATE.get());
+                output.accept(ModItems.phase1_helmet.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(ModItems.phase1_chestplate.get());
+                output.accept(ModItems.phase1_leggings.get());
+                output.accept(ModItems.phase1_boots.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -76,7 +68,6 @@ public class GalacticArmory
     {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        ModItems.ITEMS.register(modEventBus);
 
 
 
@@ -106,22 +97,13 @@ public class GalacticArmory
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(ModBlocks.EXAMPLE_BLOCK);
+        //if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+            //event.accept(ModBlocks.EXAMPLE_BLOCK);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -146,7 +128,7 @@ public class GalacticArmory
         
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenus.ARMOR_ASSEMBLER_MENU.get(), ArmorAssemblerScreen::new);
+            //event.register(ModMenus.ARMOR_ASSEMBLER_MENU.get(), ArmorAssemblerScreen::new);
         }
     }
 }

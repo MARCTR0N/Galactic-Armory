@@ -54,10 +54,12 @@ public class Config
         logDirtBlock = LOG_DIRT_BLOCK.get();
         magicNumber = MAGIC_NUMBER.get();
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
-
+        /*
         // convert the list of strings into a set of items
         items = ITEM_STRINGS.get().stream()
                 .map(itemName -> BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(itemName)))
                 .collect(Collectors.toSet());
+
+         */
     }
 }
