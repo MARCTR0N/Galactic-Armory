@@ -16,7 +16,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 
 public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("galacticarmory", "clone_helmet_phase_1.json"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("galacticarmory", "clone_helmet_phase_1"), "main");
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1.png");
 
 	private final ModelPart head;

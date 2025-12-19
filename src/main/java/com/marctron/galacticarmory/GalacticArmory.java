@@ -60,6 +60,8 @@ public class GalacticArmory
                 output.accept(ModItems.phase1_chestplate.get());
                 output.accept(ModItems.phase1_leggings.get());
                 output.accept(ModItems.phase1_boots.get());
+                output.accept(ModItems.phase2_helmet.get());
+                output.accept(ModItems.arf_helmet.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -121,9 +123,6 @@ public class GalacticArmory
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
         
         @SubscribeEvent

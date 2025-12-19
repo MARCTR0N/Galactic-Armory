@@ -2,10 +2,7 @@ package com.marctron.galacticarmory.common.util.registry;
 
 import com.marctron.galacticarmory.GalacticArmory;
 import com.marctron.galacticarmory.common.armor.BaseArmorItem;
-import com.marctron.galacticarmory.common.armor.materials.ArmorMaterial;
-import com.marctron.galacticarmory.common.item.ComponentItem;
-import com.marctron.galacticarmory.common.item.ModularChestplateItem;
-import com.marctron.galacticarmory.common.util.ModDataComponents;
+import com.marctron.galacticarmory.common.armor.BaseHelmetItem;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -15,7 +12,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -32,7 +28,9 @@ public class ModItems {
     }
 
 
-    public static final Supplier<Item> phase1_helmet = createArmor("clone_helmet_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
+    public static final Supplier<Item> phase1_helmet = createHelmet("clone_helmet_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
+    public static final Supplier<Item> phase2_helmet = createHelmet("clone_helmet_phase_2", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_phase_2.png");
+    public static final Supplier<Item> arf_helmet = createHelmet("clone_helmet_arf", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_arf.png");
     public static final Supplier<Item> phase1_chestplate = createArmor("clone_chestplate_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, "textures/models/armor/clone_armor_phase_1.png");
     public static final Supplier<Item> phase1_leggings = createArmor("clone_leggings_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, "textures/models/armor/clone_armor_phase_1.png");
     public static final Supplier<Item> phase1_boots = createArmor("clone_boots_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, "textures/models/armor/clone_armor_phase_1.png");
@@ -40,10 +38,15 @@ public class ModItems {
 
     private static Supplier<Item> createArmor(String name, Holder<net.minecraft.world.item.ArmorMaterial> material, ArmorItem.Type slot, String texture){
         return ITEMS.register(name, () ->
-                new BaseArmorItem(material, slot, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(5)),
+                new BaseArmorItem(material, slot, new Item.Properties().durability(500),
                         ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
     }
 
+    private static Supplier<Item> createHelmet(String name, Holder<net.minecraft.world.item.ArmorMaterial> material, ArmorItem.Type slot, String texture){
+        return ITEMS.register(name, () ->
+                new BaseHelmetItem(material, slot, new Item.Properties().durability(500),
+                        ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
+    }
 
     /*
 	public static final DeferredItem<Item> EXAMPLE_ITEM = 
