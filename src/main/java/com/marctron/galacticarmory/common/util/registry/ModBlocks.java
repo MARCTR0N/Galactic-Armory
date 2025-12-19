@@ -1,25 +1,12 @@
 package com.marctron.galacticarmory.common.util.registry;
 
 import com.marctron.galacticarmory.GalacticArmory;
-import com.marctron.galacticarmory.common.block.ArmorAssemblerBlock;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Function;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(GalacticArmory.MODID);
@@ -31,7 +18,8 @@ public class ModBlocks {
     public static ResourceKey<Block> blockId(String name) {
         return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, name));
     }
-    
+
+    /*
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> blockCreator) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, () -> blockCreator.apply(BlockBehaviour.Properties.of().setId(blockId(name))));
         registerBlockItems(name, toReturn);
@@ -63,5 +51,5 @@ public class ModBlocks {
     // Add your ArmorAssemblyTable block here when ready, e.g.
     // public static final DeferredBlock<ArmorAssemblyTableBlock> ARMOR_ASSEMBLY_TABLE =
     //      BLOCKS.register("armor_assembly_table", () -> new ArmorAssemblyTableBlock(Properties.of(Material.METAL).strength(3.5f)));
-
+    */
 }
