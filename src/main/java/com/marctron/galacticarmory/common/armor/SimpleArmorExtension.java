@@ -1,13 +1,16 @@
 package com.marctron.galacticarmory.common.armor;
 
 import com.marctron.galacticarmory.common.armor.model.clone_armor_phase_1;
+import com.marctron.galacticarmory.common.armor.model.clone_helmet_arf;
+import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_1;
+import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
@@ -25,28 +28,64 @@ public class SimpleArmorExtension implements IClientItemExtensions {
     }
 
     @Override
-    public HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-        ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(layerLocation);
-        HumanoidModel<?> model = modelFactory.apply(root);
+    public Model getGenericArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
+        if (!(original instanceof HumanoidModel<?> originalHumanoid)) {
+            return original;
+        }
 
-        // This one line replaces manually setting crouching, riding, etc.
-        original.copyPropertiesTo((HumanoidModel) model);
+        ModelPart root = bakeModelRoot();
+        HumanoidModel<?> model = modelFactory.apply(root);
+        //originalHumanoid.copyPropertiesTo(model);
+
+        String itemPath = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath();
+        boolean isHelmet = itemPath.contains("helmet");
+        boolean isChest = itemPath.contains("chestplate");
+        boolean isLegs = itemPath.contains("leggings");
+        boolean isFeet = itemPath.contains("boots");
+
+        // Only render parts for the current armor piece.
+        model.head.visible = isHelmet;
+        model.hat.visible = isHelmet;
+        model.body.visible = isChest;
+        model.rightArm.visible = isChest;
+        model.leftArm.visible = isChest;
+        model.rightLeg.visible = isLegs || isFeet;
+        model.leftLeg.visible = isLegs || isFeet;
+
+        // Prevent player skin head from clipping through custom full helmets.
+        if (isHelmet) {
+            originalHumanoid.head.visible = false;
+            originalHumanoid.hat.visible = false;
+        }
 
         // Handle visibility if it's the body armor class (Phase 1 Armor)
         if (isBodyArmor && model instanceof clone_armor_phase_1 armor) {
-            armor.chest.visible = equipmentSlot == EquipmentSlot.CHEST;
-            armor.left_arm.visible = equipmentSlot == EquipmentSlot.CHEST;
-            armor.right_arm.visible = equipmentSlot == EquipmentSlot.CHEST;
-            armor.leftLegging.visible = equipmentSlot == EquipmentSlot.LEGS;
-            armor.rightLegging.visible = equipmentSlot == EquipmentSlot.LEGS;
-            armor.rightBoot.visible = equipmentSlot == EquipmentSlot.FEET;
-            armor.leftBoot.visible = equipmentSlot == EquipmentSlot.FEET;
+            armor.chest.visible = isChest;
+            armor.left_arm.visible = isChest;
+            armor.right_arm.visible = isChest;
+            armor.leftLegging.visible = isLegs;
+            armor.rightLegging.visible = isLegs;
+            armor.rightBoot.visible = isFeet;
+            armor.leftBoot.visible = isFeet;
         }
 
         return model;
     }
-    @Override
-    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-        return ArmorRenderer.getBewlr();
+
+    private ModelPart bakeModelRoot() {
+        // Fallback to local layer definitions so all HumanoidModel base parts exist.
+        if (layerLocation.equals(clone_armor_phase_1.LAYER_LOCATION)) {
+            return clone_armor_phase_1.createBodyLayer().bakeRoot();
+        }
+        if (layerLocation.equals(clone_helmet_phase_1.LAYER_LOCATION)) {
+            return clone_helmet_phase_1.createBodyLayer().bakeRoot();
+        }
+        if (layerLocation.equals(clone_helmet_phase_2.LAYER_LOCATION)) {
+            return clone_helmet_phase_2.createBodyLayer().bakeRoot();
+        }
+        if (layerLocation.equals(clone_helmet_arf.LAYER_LOCATION)) {
+            return clone_helmet_arf.createBodyLayer().bakeRoot();
+        }
+        return Minecraft.getInstance().getEntityModels().bakeLayer(layerLocation);
     }
 }

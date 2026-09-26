@@ -10,14 +10,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
-public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
+public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("galacticarmory", "clone_helmet_phase_1"), "main");
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1.png");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1"), "main");
+    public static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1.png");
 
 	private final ModelPart head;
     private final ModelPart phase1;
@@ -50,10 +51,10 @@ public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
 
 	public clone_helmet_phase_1(ModelPart root) {
         super(root);
-        //this.head = root.getChild("head");
-        this.head = super.getHead();
+		this.head = root.getChild("head");
         this.phase1 = this.head.getChild("phase1");
         //this.phase1 = root.getChild("phase1");
+        this.body.visible = false;
 		this.fin = this.phase1.getChild("fin");
 		this.visor = this.phase1.getChild("visor");
 		this.bone3 = this.visor.getChild("bone3");
@@ -86,7 +87,7 @@ public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
         PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-        PartDefinition hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(32, 0).addBox(0, 0, 0, 0, 0, 0, new CubeDeformation(0)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition hat = head.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(32, 0).addBox(0, 0, 0, 0, 0, 0, new CubeDeformation(0)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition leftArm = partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(5.0F, 2.0F, 0.0F));
         PartDefinition rightArm = partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
@@ -255,7 +256,7 @@ public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
 
 		return LayerDefinition.create(meshdefinition, 128, 64);
 	}
-
+    /*
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int colour) {
         this.head.render(poseStack, vertexConsumer, packedLight, packedOverlay, colour);
@@ -266,4 +267,6 @@ public class clone_helmet_phase_1 extends HumanoidModel<LivingEntity> {
         super.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
     }
+
+     */
 }

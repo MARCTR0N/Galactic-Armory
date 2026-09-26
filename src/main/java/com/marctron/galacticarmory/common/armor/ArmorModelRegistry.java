@@ -9,14 +9,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class ArmorModelRegistry {
     // Maps Items to their baked Model instances
@@ -53,7 +52,13 @@ public class ArmorModelRegistry {
     }
 
     public static void setupPartVisibility(HumanoidModel<?> model, EquipmentSlot slot) {
-        model.setAllVisible(false);
+        model.head.visible = false;
+        model.hat.visible = false;
+        model.body.visible = false;
+        model.rightArm.visible = false;
+        model.leftArm.visible = false;
+        model.rightLeg.visible = false;
+        model.leftLeg.visible = false;
         switch (slot) {
             case HEAD -> { model.head.visible = true; model.hat.visible = true; }
             case CHEST -> { model.body.visible = true; model.rightArm.visible = true; model.leftArm.visible = true; }
@@ -62,9 +67,9 @@ public class ArmorModelRegistry {
         }
     }
 
-    public static ResourceLocation getTextureFor(ItemStack stack) {
+    public static Identifier getTextureFor(ItemStack stack) {
         if (stack.getItem() instanceof BaseArmorItem base) {
-            return base.getArmorTexture(stack, null, null, null, false);
+            return base.getArmorTexture(stack);
         }
         return null;
     }

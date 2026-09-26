@@ -11,12 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 
-public class clone_armor_phase_1 extends HumanoidModel<LivingEntity> {
+public class clone_armor_phase_1 extends HumanoidModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, "clone_armor_phase_1"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(GalacticArmory.MODID, "clone_armor_phase_1"), "main");
 	private final ModelPart body;
 	public final ModelPart chest;
 	private final ModelPart shirt;
@@ -275,7 +275,7 @@ public class clone_armor_phase_1 extends HumanoidModel<LivingEntity> {
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
-
+/*
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int colour) {
         this.body.render(poseStack, vertexConsumer, packedLight, packedOverlay, colour);
@@ -290,4 +290,6 @@ public class clone_armor_phase_1 extends HumanoidModel<LivingEntity> {
         super.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
     }
+    */
+
 }

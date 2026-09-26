@@ -5,38 +5,16 @@ import com.marctron.galacticarmory.common.armor.model.clone_helmet_arf;
 import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_1;
 import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_2;
 import com.marctron.galacticarmory.common.util.registry.ModItems;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
-@EventBusSubscriber(modid = "galacticarmory", bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ArmorRenderer extends BlockEntityWithoutLevelRenderer {
-
-    private static ArmorRenderer bewlr;
-    public ArmorRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
-        super(blockEntityRenderDispatcher, entityModelSet);
-        ArmorModelRegistry.init();
-    }
+@EventBusSubscriber(modid = "galacticarmory", value = Dist.CLIENT)
+public class ArmorRenderer {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -88,48 +66,12 @@ public class ArmorRenderer extends BlockEntityWithoutLevelRenderer {
         event.registerItem(arfHelmet, ModItems.arf_helmet.get());
 
     }
-
-
-    public static ArmorRenderer getBewlr() {
-        if (bewlr == null) {
-            bewlr = new ArmorRenderer(
-                    Minecraft.getInstance().getBlockEntityRenderDispatcher(),
-                    Minecraft.getInstance().getEntityModels()
-            );
-        }
-        return bewlr;
+    @SubscribeEvent
+    public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
+        event.register(
+                Identifier.fromNamespaceAndPath("galacticarmory", "armor"),
+                SpecialArmorRenderer.Unbaked.MAP_CODEC
+        );
     }
-    @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        HumanoidModel<?> model = ArmorModelRegistry.getModelFor(stack);
-        ResourceLocation texture = ArmorModelRegistry.getTextureFor(stack);
 
-        if (model != null && texture != null) {
-            poseStack.pushPose();
-
-            // 1. Position the model in the inventory slot
-            // Most armor models need to be flipped and lowered to center them
-            if (!(stack.getItem() instanceof  BaseHelmetItem helmetItem))
-            {
-                poseStack.translate(0.5f, 1.5f, 0.5f);
-            }
-            else{
-                poseStack.translate(0.5f,0.4f,0.5f);
-                poseStack.mulPose(Axis.ZN.rotationDegrees(-15));
-                poseStack.mulPose(Axis.XN.rotationDegrees(-15));
-            }
-            poseStack.scale(1.0f, -1.0f, -1.0f);
-
-            // 2. Filter parts (e.g., if it's a helmet item, hide the boots)
-            if (stack.getItem() instanceof ArmorItem armor) {
-                ArmorModelRegistry.setupPartVisibility(model, armor.getType().getSlot());
-            }
-
-            // 3. Render
-            VertexConsumer vc = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
-            model.renderToBuffer(poseStack, vc, packedLight, packedOverlay, -1);
-
-            poseStack.popPose();
-        }
-    }
 }

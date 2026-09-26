@@ -3,14 +3,13 @@ package com.marctron.galacticarmory.common.util.registry;
 import com.marctron.galacticarmory.GalacticArmory;
 import com.marctron.galacticarmory.common.armor.BaseArmorItem;
 import com.marctron.galacticarmory.common.armor.BaseHelmetItem;
-
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -24,28 +23,27 @@ public class ModItems {
     }
 	
 	public static ResourceKey<Item> itemId(String name) {
-        return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, name));
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(GalacticArmory.MODID, name));
     }
 
+    public static final Supplier<Item> phase1_helmet = createHelmet("clone_helmet_phase_1", ArmorMaterials.DIAMOND, ArmorType.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
+    public static final Supplier<Item> phase2_helmet = createHelmet("clone_helmet_phase_2", ArmorMaterials.DIAMOND, ArmorType.HELMET, "textures/models/armor/clone_helmet_phase_2.png");
+    public static final Supplier<Item> arf_helmet = createHelmet("clone_helmet_arf", ArmorMaterials.DIAMOND, ArmorType.HELMET, "textures/models/armor/clone_helmet_arf.png");
+    public static final Supplier<Item> phase1_chestplate = createArmor("clone_chestplate_phase_1", ArmorMaterials.DIAMOND, ArmorType.CHESTPLATE, "textures/models/armor/clone_armor_phase_1.png");
+    public static final Supplier<Item> phase1_leggings = createArmor("clone_leggings_phase_1", ArmorMaterials.DIAMOND, ArmorType.LEGGINGS, "textures/models/armor/clone_armor_phase_1.png");
+    public static final Supplier<Item> phase1_boots = createArmor("clone_boots_phase_1", ArmorMaterials.DIAMOND, ArmorType.BOOTS, "textures/models/armor/clone_armor_phase_1.png");
 
-    public static final Supplier<Item> phase1_helmet = createHelmet("clone_helmet_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
-    public static final Supplier<Item> phase2_helmet = createHelmet("clone_helmet_phase_2", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_phase_2.png");
-    public static final Supplier<Item> arf_helmet = createHelmet("clone_helmet_arf", ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, "textures/models/armor/clone_helmet_arf.png");
-    public static final Supplier<Item> phase1_chestplate = createArmor("clone_chestplate_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, "textures/models/armor/clone_armor_phase_1.png");
-    public static final Supplier<Item> phase1_leggings = createArmor("clone_leggings_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, "textures/models/armor/clone_armor_phase_1.png");
-    public static final Supplier<Item> phase1_boots = createArmor("clone_boots_phase_1", ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, "textures/models/armor/clone_armor_phase_1.png");
 
-
-    private static Supplier<Item> createArmor(String name, Holder<net.minecraft.world.item.ArmorMaterial> material, ArmorItem.Type slot, String texture){
+	private static Supplier<Item> createArmor(String name, ArmorMaterial material, ArmorType slot, String texture){
         return ITEMS.register(name, () ->
-                new BaseArmorItem(material, slot, new Item.Properties().durability(500),
-                        ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
+						new BaseArmorItem(new Item.Properties().setId(itemId(name)).durability(500),
+                        Identifier.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
     }
 
-    private static Supplier<Item> createHelmet(String name, Holder<net.minecraft.world.item.ArmorMaterial> material, ArmorItem.Type slot, String texture){
+    private static Supplier<Item> createHelmet(String name, ArmorMaterial material, ArmorType slot, String texture){
         return ITEMS.register(name, () ->
-                new BaseHelmetItem(material, slot, new Item.Properties().durability(500),
-                        ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
+				new BaseHelmetItem(new Item.Properties().setId(itemId(name)).durability(500).humanoidArmor(material, ArmorType.HELMET),
+                        Identifier.fromNamespaceAndPath(GalacticArmory.MODID, texture)));
     }
 
     /*

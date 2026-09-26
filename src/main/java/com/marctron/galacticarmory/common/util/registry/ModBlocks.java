@@ -3,7 +3,7 @@ package com.marctron.galacticarmory.common.util.registry;
 import com.marctron.galacticarmory.GalacticArmory;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,7 +16,7 @@ public class ModBlocks {
     }    
     
     public static ResourceKey<Block> blockId(String name) {
-        return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(GalacticArmory.MODID, name));
+        return ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(GalacticArmory.MODID, name));
     }
 
     /*
