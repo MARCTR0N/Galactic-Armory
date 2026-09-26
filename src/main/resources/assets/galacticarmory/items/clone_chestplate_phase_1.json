@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/clone_chestplate_phase_1",
+    "model": {
+      "type": "galacticarmory:armor",
+      "item": "galacticarmory:clone_chestplate_phase_1"
+    }
+  }
+}
+

@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/clone_helmet_phase_2",
+    "model": {
+      "type": "galacticarmory:armor",
+      "item": "galacticarmory:clone_helmet_phase_2"
+    }
+  }
+}
+
