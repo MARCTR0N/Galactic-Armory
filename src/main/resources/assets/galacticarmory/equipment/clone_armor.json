@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "galacticarmory:clone_armor/outer"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "galacticarmory:clone_armor/inner"
+      }
+    ]
+  }
+}

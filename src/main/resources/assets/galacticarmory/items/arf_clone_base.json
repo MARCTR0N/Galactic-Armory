@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/arf_clone_base",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:arf_clone_base",
+      "part": "arf_base"
+    }
+  }
+}

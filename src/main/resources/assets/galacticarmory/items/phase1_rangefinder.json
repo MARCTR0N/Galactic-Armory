@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/phase1_rangefinder",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:phase1_rangefinder",
+      "part": "phase1_rangefinder"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "gui_light": "side",
+  "textures": {
+    "particle": "galacticarmory:item/clone_helmet_phase_1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/arf_visor",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:arf_visor",
+      "part": "arf_visor"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "galacticarmory:clone_helmet_phase_2/outer"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/clone_helmet",
+    "model": {
+      "type": "galacticarmory:armor",
+      "item": "galacticarmory:clone_helmet"
+    }
+  }
+}

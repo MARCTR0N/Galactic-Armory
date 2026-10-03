@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/phase2_fin",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:phase2_fin",
+      "part": "fin2"
+    }
+  }
+}

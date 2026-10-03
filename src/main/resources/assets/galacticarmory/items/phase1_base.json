@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/phase1_base",
+    "model": {
+      "type": "galacticarmory:armor",
+      "item": "galacticarmory:phase1_base"
+    }
+  }
+}

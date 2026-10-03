@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/arf_sunvisor",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:arf_sunvisor",
+      "part": "arf_sunvisor"
+    }
+  }
+}

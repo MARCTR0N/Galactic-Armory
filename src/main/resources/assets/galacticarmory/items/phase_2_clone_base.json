@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticarmory:item/phase_2_clone_base",
+    "model": {
+      "type": "galacticarmory:helmet_part",
+      "item": "galacticarmory:phase_2_clone_base",
+      "part": "bipedhead2"
+    }
+  }
+}
