@@ -1,8 +1,10 @@
-package com.marctron.galacticarmory.common.armor.model;// Made with Blockbench 5.0.4
+// Made with Blockbench 5.1.4
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
+package com.marctron.galacticarmory.common.armor.model.visor;
 
+import com.marctron.galacticarmory.GalacticArmory;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
@@ -12,17 +14,11 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.decoration.ArmorStand;
 
-public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1"), "main");
-    public static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1.png");
-
+public class phase_1_clone_visor extends HumanoidModel<HumanoidRenderState> {
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(GalacticArmory.MODID, "phase_1_clone_visor"), "main");
+	public static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("galacticarmory", "textures/models/armor/clone_helmet_phase_1.png");
 	private final ModelPart head;
-    private final ModelPart phase1;
-	private final ModelPart fin;
 	private final ModelPart visor;
 	private final ModelPart bone3;
 	private final ModelPart bone51;
@@ -43,20 +39,12 @@ public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
 	private final ModelPart bone14;
 	private final ModelPart bone52;
 	private final ModelPart bone15;
-	private final ModelPart bipedHead;
-	private final ModelPart bone2;
-	private final ModelPart bone10;
-	private final ModelPart bone11;
-	private final ModelPart bone12;
+	private final ModelPart bb_main;
 
-	public clone_helmet_phase_1(ModelPart root) {
-        super(root);
+	public phase_1_clone_visor(ModelPart root) {
+		super(root);
 		this.head = root.getChild("head");
-        this.phase1 = this.head.getChild("phase1");
-        //this.phase1 = root.getChild("phase1");
-        this.body.visible = false;
-		this.fin = this.phase1.getChild("fin");
-		this.visor = this.phase1.getChild("visor");
+		this.visor = this.head.getChild("visor");
 		this.bone3 = this.visor.getChild("bone3");
 		this.bone51 = this.bone3.getChild("bone51");
 		this.bone60 = this.bone51.getChild("bone60");
@@ -76,17 +64,15 @@ public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
 		this.bone14 = this.bone9.getChild("bone14");
 		this.bone52 = this.bone5.getChild("bone52");
 		this.bone15 = this.phase1nose.getChild("bone15");
-		this.bipedHead = this.phase1.getChild("bipedHead");
-		this.bone2 = this.bipedHead.getChild("bone2");
-		this.bone10 = this.bone2.getChild("bone10");
-		this.bone11 = this.bone10.getChild("bone11");
-		this.bone12 = this.bone10.getChild("bone12");
+		this.bb_main = root.getChild("bb_main");
+		this.body.visible = false;
 	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition hat = head.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(32, 0).addBox(0, 0, 0, 0, 0, 0, new CubeDeformation(0)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition leftArm = partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(5.0F, 2.0F, 0.0F));
@@ -94,18 +80,7 @@ public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
         PartDefinition leftLeg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(16, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(1.9F, 12.0F, 0.0F));
         PartDefinition rightLeg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.9F, 12.0F, 0.0F));
 
-		PartDefinition phase1 = head.addOrReplaceChild("phase1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-
-		PartDefinition fin = phase1.addOrReplaceChild("fin", CubeListBuilder.create().texOffs(0, 40).addBox(-22.5F, -32.3558F, -3.7742F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(20, 27).addBox(-22.501F, -33.77F, -2.36F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
-		.texOffs(20, 27).mirror().addBox(-22.499F, -33.77F, -2.36F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(28, 29).addBox(-22.4999F, -33.77F, 3.64F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(22.0F, 23.0F, 0.25F));
-
-		PartDefinition Box_r1 = fin.addOrReplaceChild("Box_r1", CubeListBuilder.create().texOffs(24, 43).addBox(-0.9998F, -1.0F, -3.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-21.5F, -32.77F, 5.64F, 0.5236F, 0.0F, 0.0F));
-
-		PartDefinition Box_r2 = fin.addOrReplaceChild("Box_r2", CubeListBuilder.create().texOffs(0, 22).addBox(-0.9999F, 0.0F, -2.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-21.5F, -33.77F, -2.36F, 0.7854F, 0.0F, 0.0F));
-
-		PartDefinition visor = phase1.addOrReplaceChild("visor", CubeListBuilder.create(), PartPose.offset(0.0F, -5.75F, -4.5F));
+        PartDefinition visor = head.addOrReplaceChild("visor", CubeListBuilder.create(), PartPose.offset(0.0F, -5.75F, -4.5F));
 
 		PartDefinition bone3 = visor.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(8, 30).addBox(-4.0F, -30.225F, -3.525F, 8.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(8, 42).addBox(-4.01F, -30.225F, -3.5F, 1.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
@@ -199,74 +174,13 @@ public class clone_helmet_phase_1 extends HumanoidModel<HumanoidRenderState> {
 
 		PartDefinition Head_r18 = bone15.addOrReplaceChild("Head_r18", CubeListBuilder.create().texOffs(45, 15).addBox(0.0F, 0.25F, 0.0F, 3.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, -1.8797F, 0.5267F, 0.0F, -0.0873F, 0.0F));
 
-		PartDefinition bipedHead = phase1.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 22).addBox(-3.5F, -9.1818F, -2.2503F, 7.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
-		.texOffs(18, 43).addBox(3.45F, -6.725F, -0.225F, 1.0F, 7.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(18, 43).mirror().addBox(-4.45F, -6.725F, -0.225F, 1.0F, 7.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(31, 36).addBox(-4.25F, -5.975F, 1.25F, 2.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-		.texOffs(11, 34).addBox(2.25F, -5.975F, 1.25F, 2.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-		.texOffs(35, 0).addBox(-1.0F, -7.0F, 2.475F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(23, 61).addBox(-4.0F, -0.6924F, -0.2479F, 8.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-
-		PartDefinition cube_r1 = bipedHead.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(21, 35).addBox(0.0F, 0.0F, -3.025F, 2.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.25F, -5.975F, 4.25F, 0.0F, 0.0F, 0.3491F));
-
-		PartDefinition cube_r2 = bipedHead.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(36, 27).addBox(-2.0F, 0.0F, -3.025F, 2.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.25F, -5.975F, 4.25F, 0.0F, 0.0F, -0.3491F));
-
-		PartDefinition cube_r3 = bipedHead.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(28, 29).mirror().addBox(-1.055F, 0.0F, 0.0F, 1.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(28, 29).addBox(-8.945F, 0.0F, 0.0F, 1.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -0.293F, -4.4688F, 0.2618F, 0.0F, 0.0F));
-
-		PartDefinition cube_r4 = bipedHead.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(24, 0).addBox(-3.0F, 0.0F, 0.0F, 3.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 37).addBox(-3.9F, -0.0086F, -0.0018F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.7929F, -0.2314F, -5.1732F, 0.0894F, -0.2304F, -0.0237F));
-
-		PartDefinition cube_r5 = bipedHead.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(38, 11).addBox(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -0.293F, -4.4688F, 0.1231F, -0.7816F, -0.0869F));
-
-		PartDefinition cube_r6 = bipedHead.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(39, 17).addBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.5F, -0.293F, -4.4688F, 0.1231F, 0.7816F, 0.0869F));
-
-		PartDefinition cube_r7 = bipedHead.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(38, 9).addBox(2.9F, -0.0086F, -0.0018F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
-		.texOffs(27, 11).addBox(0.0F, 0.0F, 0.0F, 3.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.7929F, -0.2314F, -5.1732F, 0.0894F, 0.2304F, 0.0237F));
-
-		PartDefinition cube_r8 = bipedHead.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(0, 16).addBox(-8.75F, 1.005F, -5.0F, 9.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.25F, -1.725F, 0.425F, 0.0873F, 0.0F, 0.0F));
-
-		PartDefinition cube_r9 = bipedHead.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(20, 22).addBox(-9.0F, -2.0F, -0.25F, 9.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, 0.275F, 2.0F, 0.1309F, 0.0F, 0.0F));
-
-		PartDefinition Head_r19 = bipedHead.addOrReplaceChild("Head_r19", CubeListBuilder.create().texOffs(23, 17).addBox(-7.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.5F, -8.1818F, -3.9824F, -1.0472F, 0.0F, 0.0F));
-
-		PartDefinition Head_r20 = bipedHead.addOrReplaceChild("Head_r20", CubeListBuilder.create().texOffs(32, 6).addBox(-7.0F, -2.0F, 0.0F, 7.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.5F, -6.25F, -4.5F, -0.2618F, 0.0F, 0.0F));
-
-		PartDefinition cube_r10 = bipedHead.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(6, 48).mirror().addBox(-0.5F, -0.5037F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(6, 48).addBox(7.55F, -0.5037F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.025F, -0.1563F, 0.9172F, 0.0349F, 0.0F, 0.0F));
-
-		PartDefinition bone2 = bipedHead.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.125F, -6.0F, -0.6109F, 0.0F, 0.0F));
-
-		PartDefinition bone10 = bone2.addOrReplaceChild("bone10", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
-
-		PartDefinition bone11 = bone10.addOrReplaceChild("bone11", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -3.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.3927F, 0.0F));
-
-		PartDefinition cube_r11 = bone11.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(18, 35).addBox(-2.25F, -3.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(18, 35).addBox(-2.25F, -2.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(28, 36).mirror().addBox(-3.0F, -1.0F, 0.005F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(28, 36).addBox(-2.0F, -1.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
-
-		PartDefinition bone12 = bone10.addOrReplaceChild("bone12", CubeListBuilder.create().texOffs(0, 16).addBox(0.0F, -3.0F, 0.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.1781F, 0.0F));
-
-		PartDefinition cube_r12 = bone12.addOrReplaceChild("cube_r12", CubeListBuilder.create().texOffs(0, 26).addBox(0.25F, -3.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 26).addBox(0.25F, -2.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(8, 33).addBox(2.0F, -1.0F, 0.005F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(8, 33).addBox(0.0F, -1.0F, 0.005F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
+		PartDefinition bb_main = partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -32.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(-0.025F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 128, 64);
 	}
-    /*
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int colour) {
-        this.head.render(poseStack, vertexConsumer, packedLight, packedOverlay, colour);
-    }
 
-    @Override
-    public void setupAnim(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-    }
-
-     */
+	@Override
+	public void setupAnim(HumanoidRenderState poseStack) {
+		super.setupAnim(poseStack);
+	}
 }

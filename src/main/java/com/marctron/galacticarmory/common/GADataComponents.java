@@ -17,26 +17,26 @@ public class GADataComponents {
 
 
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<LightsaberData>> CLONE_HELMENT =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CloneHelmetData>> CLONE_HELMENT =
             COMPONENTS.registerComponentType("clone_helment", builder ->
-                    builder.persistent(LightsaberData.CODEC).networkSynchronized(LightsaberData.STREAM_CODEC).cacheEncoding());
+                    builder.persistent(CloneHelmetData.CODEC).networkSynchronized(CloneHelmetData.STREAM_CODEC).cacheEncoding());
 
-    public record LightsaberData(String base, String visor, String fin, String sunvisor, String rangeFinder) {
-        public static final Codec<LightsaberData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
-                Codec.STRING.fieldOf("base").forGetter(LightsaberData::base),
-                Codec.STRING.fieldOf("visor").forGetter(LightsaberData::visor),
-                Codec.STRING.fieldOf("fin").forGetter(LightsaberData::fin),
-                Codec.STRING.fieldOf("sunvisor").forGetter(LightsaberData::sunvisor),
-                Codec.STRING.fieldOf("rangeFinder").forGetter(LightsaberData::rangeFinder)
-        ).apply(builder, LightsaberData::new));
+    public record CloneHelmetData(String base, String visor, String fin, String sunvisor, String rangeFinder) {
+        public static final Codec<CloneHelmetData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
+                Codec.STRING.fieldOf("base").forGetter(CloneHelmetData::base),
+                Codec.STRING.fieldOf("visor").forGetter(CloneHelmetData::visor),
+                Codec.STRING.fieldOf("fin").forGetter(CloneHelmetData::fin),
+                Codec.STRING.fieldOf("sunvisor").forGetter(CloneHelmetData::sunvisor),
+                Codec.STRING.fieldOf("rangeFinder").forGetter(CloneHelmetData::rangeFinder)
+        ).apply(builder, CloneHelmetData::new));
 
-        public static final StreamCodec<FriendlyByteBuf, LightsaberData> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.STRING_UTF8, LightsaberData::base,
-                ByteBufCodecs.STRING_UTF8, LightsaberData::visor,
-                ByteBufCodecs.STRING_UTF8, LightsaberData::fin,
-                ByteBufCodecs.STRING_UTF8, LightsaberData::sunvisor,
-                ByteBufCodecs.STRING_UTF8, LightsaberData::rangeFinder,
-                LightsaberData::new
+        public static final StreamCodec<FriendlyByteBuf, CloneHelmetData> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, CloneHelmetData::base,
+                ByteBufCodecs.STRING_UTF8, CloneHelmetData::visor,
+                ByteBufCodecs.STRING_UTF8, CloneHelmetData::fin,
+                ByteBufCodecs.STRING_UTF8, CloneHelmetData::sunvisor,
+                ByteBufCodecs.STRING_UTF8, CloneHelmetData::rangeFinder,
+                CloneHelmetData::new
         );
     }
 }

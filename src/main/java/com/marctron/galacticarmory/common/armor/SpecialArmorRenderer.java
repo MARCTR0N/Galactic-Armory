@@ -1,12 +1,15 @@
 package com.marctron.galacticarmory.common.armor;
 
+import com.marctron.galacticarmory.client.renderer.VisibleModelExtents;
+import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewAssembler;
+import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderState;
+import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -16,9 +19,11 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
-public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
+public class SpecialArmorRenderer implements SpecialModelRenderer<List<HelmetPreviewRenderState.Piece>> {
     private final HumanoidModel<?> model;
     private final Identifier texture;
     private final EquipmentSlot slot;
@@ -29,9 +34,21 @@ public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
         this.slot = slot;
     }
 
+    /**
+     * Resolves the helmet's configured parts from the stack. Returning null (or an empty list) means
+     * "no customisation", in which case the stock model is drawn.
+     */
     @Override
-    public @Nullable Void extractArgument(ItemStack stack) {
-        return null;
+    public @Nullable List<HelmetPreviewRenderState.Piece> extractArgument(ItemStack stack) {
+        if (this.slot != EquipmentSlot.HEAD || !(stack.getItem() instanceof BaseHelmetItem)) {
+            return null;
+        }
+        Map<HelmetPartEnum, Item> loadout = HelmetConfiguration.readLoadout(stack);
+        if (loadout.isEmpty()) {
+            return null;
+        }
+        List<HelmetPreviewRenderState.Piece> pieces = HelmetPreviewAssembler.assemble(loadout);
+        return pieces.isEmpty() ? null : pieces;
     }
 
     private void applyCommonTransform(PoseStack poseStack) {
@@ -43,11 +60,7 @@ public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
         poseStack.scale(1.0F, -1.0F, -1.0F);
     }
 
-    @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
-        poseStack.pushPose();
-        this.applyCommonTransform(poseStack);
-
+    private void applyVisibility() {
         if (this.model instanceof com.marctron.galacticarmory.common.armor.model.clone_armor_phase_1 armorModel) {
             armorModel.chest.visible = this.slot == EquipmentSlot.CHEST;
             armorModel.left_arm.visible = this.slot == EquipmentSlot.CHEST;
@@ -59,6 +72,36 @@ public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
         } else {
             ArmorModelRegistry.setupPartVisibility(this.model, this.slot);
         }
+    }
+
+    @Override
+    public void submit(@Nullable List<HelmetPreviewRenderState.Piece> pieces, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
+        poseStack.pushPose();
+        this.applyCommonTransform(poseStack);
+
+        if (pieces != null) {
+            // A configured helmet is built entirely from its chosen parts, so the stock model is skipped.
+            for (HelmetPreviewRenderState.Piece piece : pieces) {
+                piece.part().visible = true;
+                submitNodeCollector.submitModelPart(
+                        piece.part(),
+                        poseStack,
+                        piece.model().renderType(piece.texture()),
+                        lightCoords,
+                        overlayCoords,
+                        null,
+                        false,
+                        hasFoil,
+                        -1,
+                        null,
+                        outlineColor
+                );
+            }
+            poseStack.popPose();
+            return;
+        }
+
+        this.applyVisibility();
 
         submitNodeCollector.submitModelPart(
                 this.model.root(),
@@ -81,10 +124,13 @@ public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
     public void getExtents(Consumer<Vector3fc> output) {
         PoseStack poseStack = new PoseStack();
         this.applyCommonTransform(poseStack);
-        this.model.root().getExtentsForGui(poseStack, output);
+        // Models are shared between items, so visibility has to be re-applied here: this may run
+        // before any submit() call, and the result is memoized by SpecialModelWrapper.
+        this.applyVisibility();
+        VisibleModelExtents.collect(this.model.root(), poseStack, output);
     }
 
-    public record Unbaked(Identifier item) implements NoDataSpecialModelRenderer.Unbaked {
+    public record Unbaked(Identifier item) implements SpecialModelRenderer.Unbaked<List<HelmetPreviewRenderState.Piece>> {
         public static final MapCodec<Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                         Identifier.CODEC.fieldOf("item").forGetter(Unbaked::item)
@@ -98,37 +144,27 @@ public class SpecialArmorRenderer implements NoDataSpecialModelRenderer {
 
         @Override
         public @Nullable SpecialArmorRenderer bake(SpecialModelRenderer.BakingContext context) {
-            ArmorModelRegistry.init();
-
             if (!BuiltInRegistries.ITEM.containsKey(this.item)) {
                 return null;
             }
 
             Item registryItem = BuiltInRegistries.ITEM.getValue(this.item);
 
-            ItemStack stack = new ItemStack(registryItem);
-            HumanoidModel<?> model = ArmorModelRegistry.getModelFor(stack);
-            Identifier texture = ArmorModelRegistry.getTextureFor(stack);
-            if (model == null || texture == null) {
+            // Don't create an ItemStack here - components aren't bound yet during model baking,
+            // so models/textures are looked up by Item instead.
+            HumanoidModel<?> model = ArmorModelRegistry.getModelFor(context.entityModelSet(), registryItem);
+            if (model == null) {
                 return null;
             }
 
-            EquipmentSlot slot = resolveSlot(this.item);
+            Identifier texture = ArmorModelRegistry.getTextureFor(registryItem);
+            EquipmentSlot slot = resolveSlot(registryItem);
             return new SpecialArmorRenderer(model, texture, slot);
         }
 
-        private static EquipmentSlot resolveSlot(Identifier itemId) {
-            String path = itemId.getPath();
-            if (path.contains("helmet")) {
-                return EquipmentSlot.HEAD;
-            }
-            if (path.contains("chestplate")) {
-                return EquipmentSlot.CHEST;
-            }
-            if (path.contains("leggings")) {
-                return EquipmentSlot.LEGS;
-            }
-            return EquipmentSlot.FEET;
+        private static EquipmentSlot resolveSlot(Item item) {
+            // Must not read the EQUIPPABLE data component here: item holders are not bound during model baking.
+            return item instanceof BaseArmorItem armor ? armor.getEquipmentSlot() : EquipmentSlot.HEAD;
         }
     }
 }

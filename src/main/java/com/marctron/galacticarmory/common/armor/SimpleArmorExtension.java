@@ -2,8 +2,6 @@ package com.marctron.galacticarmory.common.armor;
 
 import com.marctron.galacticarmory.common.armor.model.clone_armor_phase_1;
 import com.marctron.galacticarmory.common.armor.model.clone_helmet_arf;
-import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_1;
-import com.marctron.galacticarmory.common.armor.model.clone_helmet_phase_2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -33,15 +31,23 @@ public class SimpleArmorExtension implements IClientItemExtensions {
             return original;
         }
 
-        ModelPart root = bakeModelRoot();
-        HumanoidModel<?> model = modelFactory.apply(root);
-        //originalHumanoid.copyPropertiesTo(model);
-
         String itemPath = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath();
         boolean isHelmet = itemPath.contains("helmet");
         boolean isChest = itemPath.contains("chestplate");
         boolean isLegs = itemPath.contains("leggings");
         boolean isFeet = itemPath.contains("boots");
+
+        HumanoidModel<?> model;
+        
+        // For helmets, determine which model to use
+        if (isHelmet) {
+            // Look up specific helmet variant from registry
+            model = HelmetModelRegistry.getHelmetModel(itemPath);
+        } else {
+            // For body armor, use default layer
+            ModelPart root = bakeModelRoot();
+            model = modelFactory.apply(root);
+        }
 
         // Only render parts for the current armor piece.
         model.head.visible = isHelmet;
@@ -72,16 +78,11 @@ public class SimpleArmorExtension implements IClientItemExtensions {
         return model;
     }
 
+
     private ModelPart bakeModelRoot() {
         // Fallback to local layer definitions so all HumanoidModel base parts exist.
         if (layerLocation.equals(clone_armor_phase_1.LAYER_LOCATION)) {
             return clone_armor_phase_1.createBodyLayer().bakeRoot();
-        }
-        if (layerLocation.equals(clone_helmet_phase_1.LAYER_LOCATION)) {
-            return clone_helmet_phase_1.createBodyLayer().bakeRoot();
-        }
-        if (layerLocation.equals(clone_helmet_phase_2.LAYER_LOCATION)) {
-            return clone_helmet_phase_2.createBodyLayer().bakeRoot();
         }
         if (layerLocation.equals(clone_helmet_arf.LAYER_LOCATION)) {
             return clone_helmet_arf.createBodyLayer().bakeRoot();

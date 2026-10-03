@@ -4,9 +4,7 @@ import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 
 public class VisorPart extends BasePart {
-    public VisorPart(ArmorMaterial material) {
-        super(HelmetPartEnum.VISOR, material);
+    public VisorPart(ArmorMaterial material, String name) {
+        super(HelmetPartEnum.VISOR, material, name);
     }
-
-
 }

@@ -1,5 +1,9 @@
 package com.marctron.galacticarmory;
 
+import com.marctron.galacticarmory.common.GADataComponents;
+import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderState;
+import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderer;
+import com.marctron.galacticarmory.client.screen.ArmorAssemblerScreen;
 import com.marctron.galacticarmory.common.util.ModDataComponents;
 import com.marctron.galacticarmory.common.util.registry.*;
 import com.mojang.logging.LogUtils;
@@ -9,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -20,6 +25,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -52,16 +58,69 @@ public class GalacticArmory
 
     // Creates a creative tab with the id "galacticarmory:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ARMOR_TAB = CREATIVE_MODE_TABS.register("armor_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.galacticarmory")) //The language key for the title of your CreativeModeTab
+            .title(Component.translatable("itemGroup.galacticarmory"))
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> ModItems.phase1_helmet.get().getDefaultInstance())
+            .icon(() -> {
+                ItemStack phase1Full = new ItemStack(ModItems.helmet.get());
+                phase1Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_base_part.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_visor.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_fin.get()).toString(),
+                    "", ""));
+                return phase1Full;
+            })
             .displayItems((parameters, output) -> {
-                output.accept(ModItems.phase1_helmet.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                // Helmets
+
+                // Phase 1 Full Helmet - Pre-assembled with all parts
+                ItemStack phase1Full = new ItemStack(ModItems.helmet.get());
+                phase1Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_base_part.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_visor.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_fin.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_sunvisor.get()).toString(),
+                    BuiltInRegistries.ITEM.getKey(ModItems.phase1_rangefinder.get()).toString()));
+                output.accept(phase1Full);
+
+                ItemStack phase2Full= new ItemStack(ModItems.helmet.get());
+                phase2Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
+                        BuiltInRegistries.ITEM.getKey(ModItems.phase2_base_part.get()).toString(),
+                        BuiltInRegistries.ITEM.getKey(ModItems.phase2_visor.get()).toString(),
+                        BuiltInRegistries.ITEM.getKey(ModItems.phase2_fin.get()).toString(),
+                        "", ""));
+                output.accept(phase2Full);
+
+                ItemStack arfFull = new ItemStack(ModItems.helmet.get());
+                arfFull.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
+                        BuiltInRegistries.ITEM.getKey(ModItems.arf_base_part.get()).toString(),
+                        BuiltInRegistries.ITEM.getKey(ModItems.arf_visor.get()).toString(),
+                        "",
+                        BuiltInRegistries.ITEM.getKey(ModItems.arf_sunvisor.get()).toString(),
+                        ""));
+                output.accept(arfFull);
+
+                // Armor
                 output.accept(ModItems.phase1_chestplate.get());
                 output.accept(ModItems.phase1_leggings.get());
                 output.accept(ModItems.phase1_boots.get());
-                output.accept(ModItems.phase2_helmet.get());
-                output.accept(ModItems.arf_helmet.get());
+                
+                // Helmet Part Items
+                output.accept(ModItems.phase1_base_part.get());
+                output.accept(ModItems.phase1_visor.get());
+                output.accept(ModItems.phase1_fin.get());
+                output.accept(ModItems.phase1_sunvisor.get());
+                output.accept(ModItems.phase1_rangefinder.get());
+
+                output.accept(ModItems.phase2_base_part.get());
+                output.accept(ModItems.phase2_visor.get());
+                output.accept(ModItems.phase2_fin.get());
+
+                output.accept(ModItems.arf_base_part.get());
+                output.accept(ModItems.arf_visor.get());
+                output.accept(ModItems.arf_sunvisor.get());
+
+                output.accept(ModBlocks.ARMOR_ASSEMBLER.get());
+
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -82,6 +141,7 @@ public class GalacticArmory
         ModMenus.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModDataComponents.registerToBus(modEventBus);
+        GADataComponents.COMPONENTS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -127,7 +187,12 @@ public class GalacticArmory
         
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            //event.register(ModMenus.ARMOR_ASSEMBLER_MENU.get(), ArmorAssemblerScreen::new);
+            event.register(ModMenus.ARMOR_ASSEMBLER.get(), ArmorAssemblerScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerPictureInPictureRenderers(RegisterPictureInPictureRenderersEvent event) {
+            event.register(HelmetPreviewRenderState.class, HelmetPreviewRenderer::new);
         }
     }
 }
