@@ -65,8 +65,6 @@ public class ArmorModelRegistry {
         // Helmets
         MODEL_MAP.put(ModItems.clone_helmet.get(), p1Base);
 
-        // Modular helmet shell
-        MODEL_MAP.put(ModItems.helmet.get(), p1Base);
 
         // Phase 1 part items
         MODEL_MAP.put(ModItems.phase1_base_part.get(), p1Base);

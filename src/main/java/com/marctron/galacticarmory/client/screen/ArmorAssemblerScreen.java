@@ -2,7 +2,6 @@ package com.marctron.galacticarmory.client.screen;
 
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewAssembler;
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderState;
-import com.marctron.galacticarmory.common.armor.HelmetConfiguration;
 import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
 import com.marctron.galacticarmory.common.armor.parts.HelmetPartItems;
 import com.marctron.galacticarmory.common.menu.ArmorAssemblerMenu;
@@ -31,7 +30,7 @@ public class ArmorAssemblerScreen extends AbstractContainerScreen<ArmorAssembler
     private static final int HEIGHT = 222;
 
     private static final int CATEGORY_X = 8;
-    private static final int CATEGORY_Y = 60;
+    private static final int CATEGORY_Y = 30;
     private static final int CATEGORY_W = 58;
     private static final int CATEGORY_H = 16;
 
@@ -63,7 +62,7 @@ public class ArmorAssemblerScreen extends AbstractContainerScreen<ArmorAssembler
     private List<HelmetPartEnum> categories = List.of();
     private HelmetPartEnum selectedCategory;
 
-    private float previewYaw = 180.0F;
+    private float previewYaw = 0.0F;
     private float previewPitch = 0.0F;
     private boolean draggingPreview;
 
@@ -242,8 +241,8 @@ public class ArmorAssemblerScreen extends AbstractContainerScreen<ArmorAssembler
             } else {
                 hint = Component.translatable("gui.galacticarmory.assembler.need_parts");
             }
-            int hintX = this.leftPos + (this.imageWidth - this.font.width(hint)) / 2;
-            graphics.text(this.font, hint, hintX, y + APPLY_H + 4, TEXT_DIM);
+            int hintX = this.leftPos + 20 + (this.imageWidth - this.font.width(hint)) / 2;
+            //graphics.text(this.font, hint, hintX, y + APPLY_H + 1, TEXT_DIM);
         }
     }
 
@@ -332,7 +331,7 @@ public class ArmorAssemblerScreen extends AbstractContainerScreen<ArmorAssembler
     @Override
     public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
         if (this.draggingPreview) {
-            this.previewYaw += (float) dragX * 2.0F;
+            this.previewYaw -= (float) dragX * 2.0F;
             this.previewPitch = Mth.clamp(this.previewPitch + (float) dragY * 2.0F, -60.0F, 60.0F);
             return true;
         }

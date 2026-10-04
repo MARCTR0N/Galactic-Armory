@@ -61,7 +61,7 @@ public class GalacticArmory
             .title(Component.translatable("itemGroup.galacticarmory"))
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> {
-                ItemStack phase1Full = new ItemStack(ModItems.helmet.get());
+                ItemStack phase1Full = new ItemStack(ModItems.clone_helmet.get());
                 phase1Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
                     BuiltInRegistries.ITEM.getKey(ModItems.phase1_base_part.get()).toString(),
                     BuiltInRegistries.ITEM.getKey(ModItems.phase1_visor.get()).toString(),
@@ -73,7 +73,7 @@ public class GalacticArmory
                 // Helmets
 
                 // Phase 1 Full Helmet - Pre-assembled with all parts
-                ItemStack phase1Full = new ItemStack(ModItems.helmet.get());
+                ItemStack phase1Full = new ItemStack(ModItems.clone_helmet.get());
                 phase1Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
                     BuiltInRegistries.ITEM.getKey(ModItems.phase1_base_part.get()).toString(),
                     BuiltInRegistries.ITEM.getKey(ModItems.phase1_visor.get()).toString(),
@@ -82,7 +82,7 @@ public class GalacticArmory
                     BuiltInRegistries.ITEM.getKey(ModItems.phase1_rangefinder.get()).toString()));
                 output.accept(phase1Full);
 
-                ItemStack phase2Full= new ItemStack(ModItems.helmet.get());
+                ItemStack phase2Full= new ItemStack(ModItems.clone_helmet.get());
                 phase2Full.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
                         BuiltInRegistries.ITEM.getKey(ModItems.phase2_base_part.get()).toString(),
                         BuiltInRegistries.ITEM.getKey(ModItems.phase2_visor.get()).toString(),
@@ -90,7 +90,7 @@ public class GalacticArmory
                         "", ""));
                 output.accept(phase2Full);
 
-                ItemStack arfFull = new ItemStack(ModItems.helmet.get());
+                ItemStack arfFull = new ItemStack(ModItems.clone_helmet.get());
                 arfFull.set(GADataComponents.CLONE_HELMENT, new GADataComponents.CloneHelmetData(
                         BuiltInRegistries.ITEM.getKey(ModItems.arf_base_part.get()).toString(),
                         BuiltInRegistries.ITEM.getKey(ModItems.arf_visor.get()).toString(),

@@ -26,5 +26,6 @@
   "gui.galacticarmory.part.visor": "Visor",
   "gui.galacticarmory.part.fin": "Fin",
   "gui.galacticarmory.part.sunvisor": "Sunvisor",
-  "gui.galacticarmory.part.rangefinder": "Rangefinder"
+  "gui.galacticarmory.part.rangefinder": "Rangefinder",
+  "item.galacticarmory.clone_helmet": "Clone Helmet"
 }

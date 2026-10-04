@@ -31,9 +31,6 @@ public class ModItems {
 
     public static final Supplier<Item> clone_helmet = createHelmet("clone_helmet", ModArmorMaterials.CLONE_HELMET_BASE, ArmorType.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
 
-    // Helmet Base Items (just the body, no parts) - WEARABLE ARMOR
-    public static final Supplier<Item> helmet = createHelmet("phase1_base", ModArmorMaterials.CLONE_PHASE_1, ArmorType.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
-
     // Helmet Base Parts (for composition)
     public static final Supplier<Item> phase1_base_part = ITEMS.register("phase_1_clone_base", () -> new BasePart(HelmetPartEnum.BASEHELMET, ModArmorMaterials.CLONE_PHASE_1, "phase_1_clone_base"));
 
