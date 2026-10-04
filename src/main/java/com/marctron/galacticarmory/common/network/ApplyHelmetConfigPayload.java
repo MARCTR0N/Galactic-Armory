@@ -2,8 +2,8 @@ package com.marctron.galacticarmory.common.network;
 
 import com.marctron.galacticarmory.GalacticArmory;
 import com.marctron.galacticarmory.common.armor.HelmetConfiguration;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartItems;
+import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.HelmetPartItems;
 import com.marctron.galacticarmory.common.block.entity.ArmorAssemblerBlockEntity;
 import com.marctron.galacticarmory.common.menu.ArmorAssemblerMenu;
 import com.marctron.galacticarmory.common.util.registry.ModItems;

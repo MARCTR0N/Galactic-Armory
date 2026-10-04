@@ -1,11 +1,10 @@
 package com.marctron.galacticarmory.common.util.registry;
 
 import com.marctron.galacticarmory.GalacticArmory;
-import com.marctron.galacticarmory.common.armor.BaseArmorItem;
-import com.marctron.galacticarmory.common.armor.BaseHelmetItem;
+import com.marctron.galacticarmory.common.item.helmet.BaseArmorItem;
+import com.marctron.galacticarmory.common.item.helmet.BaseHelmetItem;
 import com.marctron.galacticarmory.common.armor.materials.ModArmorMaterials;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
-import com.marctron.galacticarmory.common.armor.parts.helmet.*;
+import com.marctron.galacticarmory.common.item.helmet.parts.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;

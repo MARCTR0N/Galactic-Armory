@@ -1,8 +1,8 @@
 package com.marctron.galacticarmory.client.renderer.preview;
 
 import com.marctron.galacticarmory.common.armor.ArmorModelRegistry;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartItems;
+import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.HelmetPartItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;

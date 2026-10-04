@@ -1,8 +1,7 @@
 package com.marctron.galacticarmory.common.armor;
 
-import com.marctron.galacticarmory.common.armor.model.base.phase_1_clone_base;
-import com.marctron.galacticarmory.common.armor.model.base.phase_2_clone_base;
-import com.marctron.galacticarmory.common.armor.model.clone_helmet_arf;
+import com.marctron.galacticarmory.common.model.helmet.parts.base.phase_1_clone_base;
+import com.marctron.galacticarmory.common.model.helmet.parts.base.phase_2_clone_base;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;

@@ -2,8 +2,8 @@ package com.marctron.galacticarmory.client.screen;
 
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewAssembler;
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderState;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartItems;
+import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.HelmetPartItems;
 import com.marctron.galacticarmory.common.menu.ArmorAssemblerMenu;
 import com.marctron.galacticarmory.common.network.ApplyHelmetConfigPayload;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

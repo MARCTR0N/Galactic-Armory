@@ -3,7 +3,9 @@ package com.marctron.galacticarmory.common.armor;
 import com.marctron.galacticarmory.client.renderer.VisibleModelExtents;
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewAssembler;
 import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderState;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.BaseArmorItem;
+import com.marctron.galacticarmory.common.item.helmet.BaseHelmetItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
@@ -61,7 +63,7 @@ public class SpecialArmorRenderer implements SpecialModelRenderer<List<HelmetPre
     }
 
     private void applyVisibility() {
-        if (this.model instanceof com.marctron.galacticarmory.common.armor.model.clone_armor_phase_1 armorModel) {
+        if (this.model instanceof com.marctron.galacticarmory.common.model.clone_armor_phase_1 armorModel) {
             armorModel.chest.visible = this.slot == EquipmentSlot.CHEST;
             armorModel.left_arm.visible = this.slot == EquipmentSlot.CHEST;
             armorModel.right_arm.visible = this.slot == EquipmentSlot.CHEST;

@@ -1,7 +1,8 @@
 package com.marctron.galacticarmory.common.armor;
 
 import com.marctron.galacticarmory.common.GADataComponents;
-import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
+import com.marctron.galacticarmory.common.item.helmet.HelmetPartItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 
@@ -64,7 +65,7 @@ public class HelmetConfiguration {
                 new java.util.EnumMap<>(HelmetPartEnum.class);
         for (HelmetPartEnum part : HelmetPartEnum.values()) {
             net.minecraft.world.item.Item item =
-                    com.marctron.galacticarmory.common.armor.parts.HelmetPartItems.itemFromId(getPartId(helmet, part));
+                    HelmetPartItems.itemFromId(getPartId(helmet, part));
             if (item != null) {
                 loadout.put(part, item);
             }
