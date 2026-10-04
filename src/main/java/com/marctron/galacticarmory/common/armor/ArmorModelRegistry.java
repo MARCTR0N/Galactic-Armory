@@ -52,7 +52,6 @@ public class ArmorModelRegistry {
         phase_1_clone_base p1Base = new phase_1_clone_base(models.bakeLayer(phase_1_clone_base.LAYER_LOCATION));
         phase_1_clone_visor p1Visor = new phase_1_clone_visor(models.bakeLayer(phase_1_clone_visor.LAYER_LOCATION));
         phase_1_clone_fin p1Fin = new phase_1_clone_fin(models.bakeLayer(phase_1_clone_fin.LAYER_LOCATION));
-        clone_helmet_arf arfHelmet = new clone_helmet_arf(models.bakeLayer(clone_helmet_arf.LAYER_LOCATION));
         phase_2_clone_base p2Base = new phase_2_clone_base(models.bakeLayer(phase_2_clone_base.LAYER_LOCATION));
         phase_2_clone_visor p2Visor = new phase_2_clone_visor(models.bakeLayer(phase_2_clone_visor.LAYER_LOCATION));
         phase_2_clone_fin p2Fin = new phase_2_clone_fin(models.bakeLayer(phase_2_clone_fin.LAYER_LOCATION));

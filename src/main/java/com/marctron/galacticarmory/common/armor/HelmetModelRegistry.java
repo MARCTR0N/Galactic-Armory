@@ -1,5 +1,6 @@
 package com.marctron.galacticarmory.common.armor;
 
+import com.marctron.galacticarmory.common.model.helmet.parts.base.arf_clone_base;
 import com.marctron.galacticarmory.common.model.helmet.parts.base.phase_1_clone_base;
 import com.marctron.galacticarmory.common.model.helmet.parts.base.phase_2_clone_base;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public final class HelmetModelRegistry {
         register(DEFAULT_KEY, phase_1_clone_base.LAYER_LOCATION, phase_1_clone_base::new);
         register("phase1_base", phase_1_clone_base.LAYER_LOCATION, phase_1_clone_base::new);
         register("clone_helmet_phase_2", phase_2_clone_base.LAYER_LOCATION, phase_2_clone_base::new);
-        register("clone_helmet_arf", clone_helmet_arf.LAYER_LOCATION, clone_helmet_arf::new);
+        register("clone_helmet_arf", arf_clone_base.LAYER_LOCATION, arf_clone_base::new);
     }
 
     private HelmetModelRegistry() {

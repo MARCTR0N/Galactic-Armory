@@ -31,10 +31,6 @@ public class ArmorRenderer {
                 clone_armor_phase_1::createBodyLayer
         );
         event.registerLayerDefinition(
-                clone_helmet_arf.LAYER_LOCATION,
-                clone_helmet_arf::createBodyLayer
-        );
-        event.registerLayerDefinition(
                 phase_1_clone_base.LAYER_LOCATION,
                 phase_1_clone_base::createBodyLayer
         );
@@ -89,9 +85,6 @@ public class ArmorRenderer {
         SimpleArmorExtension phase1Body = new SimpleArmorExtension(
                 clone_armor_phase_1.LAYER_LOCATION, clone_armor_phase_1::new, true);
 
-
-        SimpleArmorExtension arfHelmet = new SimpleArmorExtension(
-                clone_helmet_arf.LAYER_LOCATION, clone_helmet_arf::new, false);
 
         // 2. Register them to the items
         event.registerItem(phase1Body,

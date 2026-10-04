@@ -83,9 +83,6 @@ public class SimpleArmorExtension implements IClientItemExtensions {
         if (layerLocation.equals(clone_armor_phase_1.LAYER_LOCATION)) {
             return clone_armor_phase_1.createBodyLayer().bakeRoot();
         }
-        if (layerLocation.equals(clone_helmet_arf.LAYER_LOCATION)) {
-            return clone_helmet_arf.createBodyLayer().bakeRoot();
-        }
         return Minecraft.getInstance().getEntityModels().bakeLayer(layerLocation);
     }
 }
