@@ -3,7 +3,6 @@ package com.marctron.galacticarmory.common.util.registry;
 import com.marctron.galacticarmory.GalacticArmory;
 import com.marctron.galacticarmory.common.armor.BaseArmorItem;
 import com.marctron.galacticarmory.common.armor.BaseHelmetItem;
-import com.marctron.galacticarmory.common.armor.CloneHelmetItem;
 import com.marctron.galacticarmory.common.armor.materials.ModArmorMaterials;
 import com.marctron.galacticarmory.common.armor.parts.HelmetPartEnum;
 import com.marctron.galacticarmory.common.armor.parts.helmet.*;
@@ -29,12 +28,13 @@ public class ModItems {
         return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(GalacticArmory.MODID, name));
     }
 
+    // Base Helmet Item that stores are
     public static final Supplier<Item> clone_helmet = createHelmet("clone_helmet", ModArmorMaterials.CLONE_HELMET_BASE, ArmorType.HELMET, "textures/models/armor/clone_helmet_phase_1.png");
 
-    // Helmet Base Parts (for composition)
-    public static final Supplier<Item> phase1_base_part = ITEMS.register("phase_1_clone_base", () -> new BasePart(HelmetPartEnum.BASEHELMET, ModArmorMaterials.CLONE_PHASE_1, "phase_1_clone_base"));
 
     // Helmet Part Items - Phase 1
+    public static final Supplier<Item> phase1_base_part = ITEMS.register("phase_1_clone_base", () -> new BasePart(HelmetPartEnum.BASEHELMET, ModArmorMaterials.CLONE_PHASE_1, "phase_1_clone_base"));
+    // store bone and current rotation of the angle relation to the original helmet model
     public static final Supplier<Item> phase1_visor = ITEMS.register("phase1_visor", () -> new VisorPart(ModArmorMaterials.CLONE_PHASE_1, "phase1_visor"));
     public static final Supplier<Item> phase1_fin = ITEMS.register("phase1_fin", () -> new FinPart("phase1_fin"));
     public static final Supplier<Item> phase1_sunvisor = ITEMS.register("phase1_sunvisor", () -> new SunvisorPart("phase1_sunvisor"));
@@ -71,7 +71,7 @@ public class ModItems {
 
     private static Supplier<Item> createModularHelmet(String name) {
         return ITEMS.register(name, () ->
-				new CloneHelmetItem(new Item.Properties().setId(itemId(name)).durability(500),
+				new BaseHelmetItem(new Item.Properties().setId(itemId(name)).durability(500),
                         Identifier.fromNamespaceAndPath(GalacticArmory.MODID, "textures/models/armor/clone_helmet_phase_1.png")));
     }
 }
