@@ -6,6 +6,7 @@ import com.marctron.galacticarmory.client.renderer.preview.HelmetPreviewRenderSt
 import com.marctron.galacticarmory.common.item.helmet.parts.HelmetPartEnum;
 import com.marctron.galacticarmory.common.item.helmet.BaseArmorItem;
 import com.marctron.galacticarmory.common.item.helmet.BaseHelmetItem;
+import com.marctron.galacticarmory.common.model.clone_armor_phase_1;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
@@ -15,7 +16,9 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
@@ -29,6 +32,7 @@ public class SpecialArmorRenderer implements SpecialModelRenderer<List<HelmetPre
     private final HumanoidModel<?> model;
     private final Identifier texture;
     private final EquipmentSlot slot;
+    private Entity entity;
 
     public SpecialArmorRenderer(HumanoidModel<?> model, Identifier texture, EquipmentSlot slot) {
         this.model = model;
@@ -54,16 +58,23 @@ public class SpecialArmorRenderer implements SpecialModelRenderer<List<HelmetPre
     }
 
     private void applyCommonTransform(PoseStack poseStack) {
-        poseStack.translate(0.5F, this.slot == EquipmentSlot.HEAD ? 0.4F : 1.5F, 0.5F);
+
+        poseStack.translate(0.5F, this.slot == EquipmentSlot.HEAD ? 0.25F : 1.5F, 0.5F);
         if (this.slot == EquipmentSlot.HEAD) {
-            poseStack.mulPose(Axis.ZN.rotationDegrees(-15));
-            poseStack.mulPose(Axis.XN.rotationDegrees(-15));
+            poseStack.mulPose(Axis.XP.rotationDegrees(30));
+            poseStack.mulPose(Axis.YP.rotationDegrees(45));
         }
-        poseStack.scale(1.0F, -1.0F, -1.0F);
+
+        if (entity instanceof ArmorStand){
+            poseStack.translate(0.5F, 1F,0.5F);
+            poseStack.scale(0.9F, -0.9F, -0.9F);
+        }
+        else
+            poseStack.scale(1.0F, -1.0F, -1.0F);
     }
 
     private void applyVisibility() {
-        if (this.model instanceof com.marctron.galacticarmory.common.model.clone_armor_phase_1 armorModel) {
+        if (this.model instanceof clone_armor_phase_1 armorModel) {
             armorModel.chest.visible = this.slot == EquipmentSlot.CHEST;
             armorModel.left_arm.visible = this.slot == EquipmentSlot.CHEST;
             armorModel.right_arm.visible = this.slot == EquipmentSlot.CHEST;
@@ -145,7 +156,7 @@ public class SpecialArmorRenderer implements SpecialModelRenderer<List<HelmetPre
         }
 
         @Override
-        public @Nullable SpecialArmorRenderer bake(SpecialModelRenderer.BakingContext context) {
+        public @Nullable SpecialArmorRenderer bake(BakingContext context) {
             if (!BuiltInRegistries.ITEM.containsKey(this.item)) {
                 return null;
             }

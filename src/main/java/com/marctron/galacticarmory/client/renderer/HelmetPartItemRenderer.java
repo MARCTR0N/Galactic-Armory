@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import org.joml.Quaternionfc;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
 
@@ -33,10 +34,12 @@ public class HelmetPartItemRenderer implements NoDataSpecialModelRenderer {
 
     private void applyCommonTransform(PoseStack poseStack) {
         // 0.4 keeps the part centred in the item cell, matching SpecialArmorRenderer's head transform.
-        poseStack.translate(0.5F, 0.4F, 0.5F);
-        poseStack.mulPose(Axis.ZN.rotationDegrees(-15));
-        poseStack.mulPose(Axis.XN.rotationDegrees(-15));
+        //poseStack.pushPose();
+        poseStack.translate(0.5F, 0.25F, 0.5F);
+        poseStack.mulPose(Axis.XP.rotationDegrees(30));
+        poseStack.mulPose(Axis.YP.rotationDegrees(45));
         poseStack.scale(1.0F, -1.0F, -1.0F);
+        //poseStack.popPose();
     }
 
     @Override
